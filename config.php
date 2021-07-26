@@ -37,8 +37,13 @@ else{
  $products_table = "CREATE TABLE IF NOT EXISTS products
  (id INT AUTO_INCREMENT,
  bicycle_name VARCHAR(50) NOT NULL,
+ color_1 VARCHAR(8) NOT NULL,
+ color_2 VARCHAR(8) NOT NULL,
  price INT (10) NOT NULL,
  company VARCHAR(50) NOT NULL,
  image_path VARCHAR(100) NOT NULL,
+ full_thumbnail_path VARCHAR(100) NOT NULL,
+ large_thumbnail_path VARCHAR(100) NOT NULL,
+ small_thumbnail_path VARCHAR(100) NOT NULL,
  date_added TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
  PRIMARY KEY(id));";

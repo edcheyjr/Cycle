@@ -806,6 +806,12 @@ Single Product Page
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/*
+===========
+addProduct
+===========
+*/
 /* 
 form button
 */
@@ -820,12 +826,8 @@ form button
 .form .btn.disable {
   background: var(--clr-primary-9);
 }
-/*
-===========
-addProduct
-===========
-*/
-.form input {
+.form input,
+.form select {
   padding: 0.5rem;
   background: var(--clr-grey-10);
   border-radius: var(--radius);
@@ -869,6 +871,7 @@ form .success-msg {
   margin-top: 8rem;
   padding: 2rem;
   box-shadow: var(--light-shadow);
+  margin: 0 auto;
 }
 .card:hover {
   box-shadow: var(--dark-shadow);

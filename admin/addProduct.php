@@ -6,26 +6,113 @@ $db ="ecycle";
 
 $connect = mysqli_connect($host,$user,$password,$db);
 
-$imageErrMessage = null;
-$uploadMessage = null;
-$namePriceCompanyImageEmpty = $nameValidateErr = $priceValidateErr = $companyValidateErr = $imageValidateErr = null;
+$imageErrMessage = $uploadMessage = $validateErr = null;
 
+// remove special characters
+function input_data($data) {  
+  $data = trim($data);  
+  $data = stripslashes($data);  
+  $data = htmlspecialchars($data);  
+  return $data;  
+}  
+ 
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
   if(isset($_POST['submit'])){
     // extract input from post array
     // print_r($_FILES['file']) && die;
-    $target_dir = '../public/store/';
+    include 'utils/resize.php';
+    // original file dir
+
+    $target_dir_original = '../public/store/original/';
+    
+
+    //thumbails dir 
+    $target_dir_thumbnail_full = '../public/store/thumbnails/full/';
+    $target_dir_thumbnail_large = '../public/store/thumbnails/large/';
+    $target_dir_thumbnail_small = '../public/store/thumbnails/small/';
+
+    //thumbails width and heights
+    //recommended 1280 × 720 
+    //expirement with sizes recommended ratio 16:9 or 4:3
+    //$full_width= 3000; 
+    //$full_height =3000;
+    $full_width= 2560; 
+    $full_height =1440;
+    
+
+    // $large_width = 512;
+    // $large_height = 768;
+    $large_width = 1200;
+    $large_height = 720;
+
+    // $small_width = 24;
+    // $small_height= 36;
+    $small_width = 379.33;
+    $small_height= 208;
+
     $file = $_FILES["file"];
+    $filePath =  basename($_FILES['file']['name']);
     $fileError = $_FILES["file"]["error"];
     $fileName = $_FILES["file"]["name"];
     $tempFile = $_FILES["file"]["tmp_name"];
     $fileSize = $_FILES["file"]["size"];
+    
     extract($_POST);
     // $name = $_POST['name'];
     // $price = $_POST['price'];
     // $company = $_POST['company'];
-        
+    $check_string = '/^[a-zA-z]*$/';
+    if(empty($name)){
+      $validateErr = 'name is required!';
+    }
+    elseif(!preg_match($check_string, $name)){
+      $validateErr = 'only alphabet and whitespaces allowed allowed!';
+    }
+    else{
+     // sanitize $name and continue to check the next input 
+      input_data($name);
+     $name = filter_var($name,FILTER_SANITIZE_STRING);
+      if(empty($price)){
+        $validateErr = 'price is required!';
+      }
+      elseif($price === 0){
+        $validateErr = 'price cannot be zero!';
+      }
+      elseif(!filter_var($price,FILTER_VALIDATE_INT)){
+        $validateErr = 'only numbers allowed!';
+      }
+      else{
+        // sanitize price and move to check the next input
+        input_data($name);
+        $price = filter_var($price,FILTER_SANITIZE_NUMBER_INT);
+        if(empty($company)){
+          $validateErr = "company name required!";
+        }
+        elseif(!preg_match($check_string,$company)){
+          $validateErr = 'only alphabet and whitespaces allowed allowed!';
+        }
+        else{
+          // SANITIZE and move to the next item
+          filter_var($company, FILTER_SANITIZE_STRING);
+          if(!preg_match("/^[a-zA-Z0-9#]*$/",$color1)){
+
+            $validateErr = 'only alphabet number and # allowed!';
+
+          }else{
+        // sanitize price and move to check the next input
+            $color1 = filter_var($color1,FILTER_SANITIZE_STRING);
+            if(!preg_match("/^[a-zA-Z0-9#]*$/",$color2)){
+
+              $validateErr = 'only alphabet number and # allowed!';
+            }
+           $color2 = filter_var($color2,FILTER_SANITIZE_STRING);
+          }  
+        }
+      }
+    }
+    // filter the others
+    
     if(!empty($file)){
       // Check if file already exists
       if (!file_exists($fileName)) {   
@@ -40,18 +127,48 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
           if ($fileSize <= 5000000) {
             
             if($fileError == 0){
-              $newFileName = uniqid('',true).'.'.$imageFileType;
-              $targetFile =$target_dir.basename($newFileName);
 
-              if (move_uploaded_file($tempFile, $targetFile)){
-                $uploadMessage = "The file".  htmlspecialchars(basename($_FILES["file"]["name"])). " has succesfully been uploaded.";
-                $addProductQuery = "INSERT INTO products(bicycle_name, price ,company	,image_name) VALUES('$name','$price','$company','$newFileName')";
-                 mysqli_query($connect,$addProductQuery) or die(mysqli_error($connect));
-                //  header('location:view.php');
+              if($validateErr == null){
+              // orginal filename renaming
+                $newFileName = uniqid('',true).'_ORGINAL_IMG.'.$imageFileType;
+                $targetFile =$target_dir_original.basename($newFileName);
+                
+                // resize the image for uniformity and also improve request handling interms of size of the image
+                
+                // rename
+                $new_full_thumbnail_name = uniqid('',true).'_FULL_RESIZED_IMG.'.$imageFileType;
+                $new_large_thumbnail_name = uniqid('',true).'_LARGE_RESIZED_IMG.'.$imageFileType;
+                $new_small_thumbnail_name = uniqid('',true).'_SMALL_RESIZED_IMG.'.$imageFileType;
+
+                // target storage
+                $target_resized_full_thumbnail = $target_dir_thumbnail_full.basename($new_full_thumbnail_name);
+                $target_resized_large_thumbnail = $target_dir_thumbnail_large.basename($new_large_thumbnail_name);
+                $target_resized_small_thumbnail = $target_dir_thumbnail_small.basename($new_small_thumbnail_name);
+
+                // copy temp file to this destination
+                copy($tempFile, $target_resized_full_thumbnail);
+                copy($tempFile, $target_resized_large_thumbnail);
+                copy($tempFile, $target_resized_small_thumbnail);
+
+                // resize that image
+                resize_image($target_resized_full_thumbnail,$full_width,$full_height,true);
+                resize_image($target_resized_large_thumbnail,$large_width,$large_height,true);
+                resize_image($target_resized_small_thumbnail,$small_width,$small_height,true);
+
+                if (move_uploaded_file($tempFile, $targetFile)){
+
+                  $uploadMessage = "The file".  htmlspecialchars(basename($_FILES["file"]["name"])). " has succesfully been uploaded. new bike for sell!!!";
+                  $addProductQuery = "INSERT INTO products(bicycle_name, color_1, color_2, price ,company	,image_name,full_thumbnail_path,large_thumbnail_path,small_thumbnail_path) VALUES('$name','$color1','$color2','$price','$company','$newFileName','$new_full_thumbnail_name','$new_large_thumbnail_name','$new_small_thumbnail_name')";
+                    mysqli_query($connect,$addProductQuery) or die(mysqli_error($connect));
+                  //  header('location:view.php');
                 }else{
-                $imageErrMessage = "Sorry, there was an error uploading your file.";
-              }      
-            }else{
+                  $imageErrMessage = "Sorry, there was an error uploading your file.";
+                }      
+              }else{
+                $validateErr= $validateErr;
+              }
+            }
+            else{
               $imageErrMessage = 'Sorry, there was an error uplading image, error number'.$file_Error;
             }
           }
@@ -97,7 +214,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 // id
 // name
 // price
-// color not add will depend with the type of the bike
+// add two color which the bike has
 // To add 
 // count will add
 // company
@@ -179,8 +296,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        <p class ='error-msg'><?=$imageErrMessage?></p>
        <?php elseif($uploadMessage != null): ?>
         <p class="success-msg"><?=$uploadMessage?></p>
-        <?php elseif($nameValidateErr != null): ?>
-        <p class="error-msg"><?=$nameValidateErr?></p>
+        <?php elseif($validateErr != null):?>
+        <p class="error-msg"><?=$validateErr?></p>
         <?php endif?>
        <div class="form-group">
          <label for="name" class="label">name</label>
@@ -196,7 +313,35 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        </div>
         <div class="form-group">
          <label for="name" class="label">select image</label>
-        <input type="file" aria-label="name" class="form-control" id ="name"  name ="file">
+        <input type="file" aria-label="image" class="form-control" id ="name"  name ="file" required>
+       </div>
+        <div class="form-group">
+         <label for="color1" class="label">select the dominant colors of the product</label>
+        <select aria-label="first color set" class="form-control" id ="color1"  name ="color1">
+          <option value="#fff">white</option>
+          <option value="#e75757">red</option>
+          <option value="#fffb0a">yellow</option>
+          <option value="#fda400">orange</option>
+          <option value="#008000">green</option>
+          <option value="#0077ff">blue</option>
+          <option value="#800080">purple</option>
+          <option value="#ffc0cb">pink</option>
+          <option value="#000">black</option>
+        </select>
+       </div>
+       <div class="form-group">
+         <label for="color1" class="label">add a secondary color</label>
+          <select aria-label="second color set" class="form-control" id ="color2"  name ="color2">
+          <option value="#fff">white</option>
+          <option value="#e75757">red</option>
+          <option value="#fffb0a">yellow</option>
+          <option value="#fda400">orange</option>
+          <option value="#008000">green</option>
+          <option value="#0077ff">blue</option>
+          <option value="#800080">purple</option>
+          <option value="#ffc0cb">pink</option>
+          <option value="#000">black</option>
+        </select>
        </div>
        <button type="submit" class="btn form-control" name ="submit">Add</button>
      </form>
@@ -204,5 +349,5 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
      </div>
     </div>
     <script src="../src/validation.js"></script>
-</body>
+  </body>
 </html>

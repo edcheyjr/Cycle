@@ -1,15 +1,13 @@
 import { getElement } from './utils.js'
 
-const input = document.querySelectorAll('.form-control')
+const input = document.querySelectorAll('input')
 const btn = document.querySelector('.btn')
 
-input.addEventListener('keyup', () => {
-  input.forEach((input) => {
-    if (!input.value) {
-      btn.classList.add('disable')
-      btn.disabled = true
-    }
-    btn.classList.remove('disable')
-    btn.removeAttribute('disable')
-  })
+input.forEach((input) => {
+  if (input.value == '') {
+    btn.classList.add('disable')
+    btn.disabled = true
+  }
+  btn.classList.toggle('disable')
+  btn.toggleAttribute('disable')
 })

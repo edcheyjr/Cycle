@@ -11,7 +11,10 @@ const setupStore = (products) => {
       fields: { featured, name, price, company, colors, image: img },
     } = product
     const image = img[0].thumbnails.large.url
-    console.log(img)
+
+    // product AND img
+    console.log('product', product)
+    console.log('img', img)
     return { id, featured, name, price, company, colors, image }
   })
   setStorageItem('store', store)
