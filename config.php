@@ -1,5 +1,7 @@
 <?php
-$connect = require "connect.php";
+require "connect.php";
+
+// run once and configure your connect.php $db with the right database name;
 // check connection
 if(!$connect){
     echo "Cannot connect to db ".mysqli_connect_error();
@@ -41,9 +43,9 @@ else{
  color_2 VARCHAR(8) NOT NULL,
  price INT (10) NOT NULL,
  company VARCHAR(50) NOT NULL,
- image_path VARCHAR(100) NOT NULL,
- full_thumbnail_path VARCHAR(100) NOT NULL,
- large_thumbnail_path VARCHAR(100) NOT NULL,
- small_thumbnail_path VARCHAR(100) NOT NULL,
+ image_name VARCHAR(100) NOT NULL,
+ full_thumbnail_name VARCHAR(100) NOT NULL,
+ large_thumbnail_name VARCHAR(100) NOT NULL,
+ small_thumbnail_name VARCHAR(100) NOT NULL,
  date_added TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
  PRIMARY KEY(id));";

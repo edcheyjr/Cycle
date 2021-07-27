@@ -1,7 +1,3 @@
 #stored images
-public/store/original/*
-public/store/thumbnails/full/*
-public/store/thumbnails/large/*
-public/store/thumbnails/small/*
 js
 test

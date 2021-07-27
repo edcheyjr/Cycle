@@ -1,0 +1,5 @@
+# ignore all the thumbnails
+*.jpg
+*.png
+*.gif
+*.jpeg

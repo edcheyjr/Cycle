@@ -1,10 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "123hadi9alafu0";
-$db ="ecycle";
-
-$connect = mysqli_connect($host,$user,$password,$db);
+require '../connect.php';
 
 $imageErrMessage = $uploadMessage = $validateErr = null;
 
@@ -32,25 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $target_dir_thumbnail_large = '../public/store/thumbnails/large/';
     $target_dir_thumbnail_small = '../public/store/thumbnails/small/';
 
-    //thumbails width and heights
-    //recommended 1280 × 720 
-    //expirement with sizes recommended ratio 16:9 or 4:3
-    //$full_width= 3000; 
-    //$full_height =3000;
-    $full_width= 2560; 
-    $full_height =1440;
-    
-
-    // $large_width = 512;
-    // $large_height = 768;
-    $large_width = 1200;
-    $large_height = 720;
-
-    // $small_width = 24;
-    // $small_height= 36;
-    $small_width = 379.33;
-    $small_height= 208;
-
+   
     $file = $_FILES["file"];
     $filePath =  basename($_FILES['file']['name']);
     $fileError = $_FILES["file"]["error"];
@@ -62,12 +39,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     // $name = $_POST['name'];
     // $price = $_POST['price'];
     // $company = $_POST['company'];
-    $check_string = '/^[a-zA-z]*$/';
+    $check_string = '/^[a-zA-z_\s]*$/';
     if(empty($name)){
       $validateErr = 'name is required!';
     }
-    elseif(!preg_match($check_string, $name)){
-      $validateErr = 'only alphabet and whitespaces allowed allowed!';
+    elseif(!preg_match($check_string,$name)){
+      $validateErr = 'only alphabet and whitespaces allowed!';
     }
     else{
      // sanitize $name and continue to check the next input 
@@ -84,15 +61,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
       }
       else{
         // sanitize price and move to check the next input
-        input_data($name);
+        input_data($price);
         $price = filter_var($price,FILTER_SANITIZE_NUMBER_INT);
         if(empty($company)){
           $validateErr = "company name required!";
         }
-        elseif(!preg_match($check_string,$company)){
-          $validateErr = 'only alphabet and whitespaces allowed allowed!';
+        elseif(!preg_match("/^[a-zA-Z0-9_\s]*$/",$company)){
+
+          $validateErr = 'only alphabet, numbers and whitespaces allowed!';
         }
         else{
+
+          input_data($company);
           // SANITIZE and move to the next item
           filter_var($company, FILTER_SANITIZE_STRING);
           if(!preg_match("/^[a-zA-Z0-9#]*$/",$color1)){
@@ -164,8 +144,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 }else{
                   $imageErrMessage = "Sorry, there was an error uploading your file.";
                 }      
-              }else{
-                $validateErr= $validateErr;
               }
             }
             else{
@@ -294,9 +272,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        <h3>Add new electric bicycle</h3>
       <?php if($imageErrMessage != null):?>
        <p class ='error-msg'><?=$imageErrMessage?></p>
-       <?php elseif($uploadMessage != null): ?>
+       <?php endif?>
+       <?php if($uploadMessage != null): ?>
         <p class="success-msg"><?=$uploadMessage?></p>
-        <?php elseif($validateErr != null):?>
+       <?php endif?>
+        <?php if($validateErr != null):?>
         <p class="error-msg"><?=$validateErr?></p>
         <?php endif?>
        <div class="form-group">

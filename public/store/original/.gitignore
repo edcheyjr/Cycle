@@ -1,0 +1,5 @@
+# ignore all the photos
+*.jpg
+*.png
+*.gif
+*.jpeg

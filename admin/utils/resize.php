@@ -1,10 +1,15 @@
 <?php
 /**
- * 
- * path of the file to renamed @param string $path
- * width you want it to be @param  int $width 
- * height you want it to be @param int $height 
- * whether you want the updates to take effect or not @param bool $update 
+ * path of the file to renamed 
+ * @param string $path
+ * width you want it to be
+ * @param  int $width 
+ * height you want it to be
+ * @param int $height 
+ * whether you want the updates to take effect or not 
+ * @param bool $update 
+ * returns
+ * @return string $path image[jpg,png,gif,jpeg]($path)
  */
  function resize_image($path, $width, $height, $update = false) {
    //  echo $path;
