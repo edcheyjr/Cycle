@@ -43,6 +43,7 @@ else{
  color_2 VARCHAR(8) NOT NULL,
  price INT (10) NOT NULL,
  company VARCHAR(50) NOT NULL,
+ desc TEXT NOT NULL,
  image_name VARCHAR(100) NOT NULL,
  full_thumbnail_name VARCHAR(100) NOT NULL,
  large_thumbnail_name VARCHAR(100) NOT NULL,

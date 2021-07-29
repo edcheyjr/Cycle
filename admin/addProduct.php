@@ -138,7 +138,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 if (move_uploaded_file($tempFile, $targetFile)){
 
                   $uploadMessage = "The file".  htmlspecialchars(basename($_FILES["file"]["name"])). " has succesfully been uploaded. new bike for sell!!!";
-                  $addProductQuery = "INSERT INTO products(bicycle_name, color_1, color_2, price ,company	,image_name,full_thumbnail_path,large_thumbnail_path,small_thumbnail_path) VALUES('$name','$color1','$color2','$price','$company','$newFileName','$new_full_thumbnail_name','$new_large_thumbnail_name','$new_small_thumbnail_name')";
+                  $addProductQuery = "INSERT INTO products(bicycle_name, color_1, color_2, price ,company,desc,image_name,full_thumbnail_path,large_thumbnail_path,small_thumbnail_path) VALUES('$name','$color1','$color2','$price','$company','$desc','$newFileName','$new_full_thumbnail_name','$new_large_thumbnail_name','$new_small_thumbnail_name')";
                     mysqli_query($connect,$addProductQuery) or die(mysqli_error($connect));
                   //  header('location:view.php');
                 }else{
@@ -218,51 +218,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 <!-- css link-->
 <link rel="stylesheet" href="../styles.css">
 <body>
-  <nav class="navbar page">
-      <div class="nav-center">
-        <!-- links -->
-        <div>
-          <button class="toggle-nav">
-            <i class="fas fa-bars"></i>
-          </button>
-          <ul class="nav-links">
-            <li>
-              <a href="view.php" class="nav-link"> admin panel </a>
-            </li>
-            <li>
-              <a href="addProduct.php" class="nav-link"> add product </a>
-            </li>
-          </ul>
-        </div>
-        <!-- logo -->
-        <p class="nav-logo2 black">eCycle</p>
-    </nav>
-    <!-- sidebar -->
-    <div class="sidebar-overlay">
-      <aside class="sidebar">
-        <!-- close -->
-        <button class="sidebar-close">
-          <i class="fas fa-times"></i>
-        </button>
-        <!-- links -->
-        <ul class="sidebar-links">
-          <li>
-            <a href="view.php" class="sidebar-link">
-              <i class="fas fa-home fa-fw"></i>
-              admin panel
-            </a>
-          </li>
-          <li>
-            <a href="#" class="sidebar-link">
-              <i class="fas fa-couch fa-fw"></i>
-              addProduct
-            </a>
-          </li>
-        </ul>
-      </aside>
-    </div>
-    <div class="container">
-     <div class="mx-auto">
+<?php require 'adminNav.php'?>
+
+<div class="container">
+  <div class="mx-auto">
 
      <!-- <div>
       <p>Add new electric bicycles to sell</p>
@@ -290,6 +249,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         <div class="form-group">
          <label for="company" class="label">company</label>
         <input type="text" aria-label="company" min='0' class="form-control" placeholder="company" id = "company" name ="company" required>
+        </div>
+        <div class="form-group">
+         <label for="desc" class="label">desciption</label>
+        <textarea type="text" aria-label="desc" min='0' class="form-control" rows="4" cols="form-control" placeholder="desc" id = "desc" name ="desc" required>
+        </textarea>
        </div>
         <div class="form-group">
          <label for="name" class="label">select image</label>
@@ -328,6 +292,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
      </div>
      </div>
     </div>
-    <script src="../src/validation.js"></script>
+    <script type='module' src="../src/pages/validation.js"></script>
   </body>
 </html>

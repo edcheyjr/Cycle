@@ -7,15 +7,16 @@ $image_array = array();
 $image_info =array();
 $status = ['server error' =>'505','ok'=>200];
 $thumbnails = array();
+$response = [];
 $aplhabets = 'abcdefghijklmnopqrstuvwxyz';
 $strings = $aplhabets.strtoupper($aplhabets);
 // original file dir
-$target_dir_original_img = './public/store/original/';
-
+$target_url_original = 'http://localhost/ecycle/public/store/original/';
+$target_dir = './public/store/original/';
 //thumbails dir 
-$target_dir_thumbnail_img_full = './public/store/thumbnails/full/';
-$target_dir_thumbnail_img_large = './public/store/thumbnails/large/';
-$target_dir_thumbnail_img_small = './public/store/thumbnails/small/';
+$target_url_thumbnail_full = 'http://localhost/ecycle/public/store/thumbnails/full/';
+$target_url_thumbnail_large = 'http://localhost/ecycle/public/store/thumbnails/large/';
+$target_url_thumbnail_small = 'http://localhost/ecycle/public/store/thumbnails/small/';
 
 
 // generate image id
@@ -95,55 +96,55 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
   $fields['colors'] = array($color_1, $color_2);
   $fields['company'] = $company;
   $fields['featured'] = featuredProducts($connect,$id);
+  $fields['price'] = $price;
  
   // image info as an associative array; 
   $image_info['id']=$image_id; 
-  $image_info['url']=$target_dir_original_img.$image_name;
+  $image_info['url']=$target_url_original.$image_name;
   $image_info['filename']=$image_name;
  
   //extract details for image info
-  extract(getImageFileInfo($target_dir_original_img.$image_name));
+  extract(getImageFileInfo($target_dir.$image_name));
   $image_info['size']= $size;
   $image_info['type'] =$type;
  
   //extract thumbnails details
-  $thumbnails['full'] = getThumbnails($full_width, $full_height,$target_dir_thumbnail_img_full.$full_thumbnail_name);
-  $thumbnails['large'] = getThumbnails($large_width, $large_height, $target_dir_thumbnail_img_large.$large_thumbnail_name);
-  $thumbnails['small'] = getThumbnails($small_width, $small_height, $target_dir_thumbnail_img_small.$large_thumbnail_name);
+  $thumbnails['full'] = getThumbnails($full_width, $full_height,$target_url_thumbnail_full.$full_thumbnail_name);
+  $thumbnails['large'] = getThumbnails($large_width, $large_height, $target_url_thumbnail_large.$large_thumbnail_name);
+  $thumbnails['small'] = getThumbnails($small_width, $small_height, $target_url_thumbnail_small.$large_thumbnail_name);
  
  
   // insert thumbnails details to thumbnails
-  $image_info['thumbails'] = $thumbnails;
- 
-  // image info url
-  $image_info['url']=$target_dir_original_img.$image_name;
-
- 
+  $image_info['thumbnails'] = $thumbnails; 
   $fields['image'] = array($image_info);
    // send the json data
 
-$response = array('id'=>$id, 'fields'=> $fields);
- // echo fields
-
+  $response['id']= $id;
+  $response['fields'] = $fields;
  
+  $responses[] = $response;
+ // echo fields 
  }
- if($response){
+ if($responses){
 
   //remove any header information
   header_remove(); 
   //limit which route can make this request
+  //http://localost/ecycle/test/test.html
+  //http://localost/ecycle/index.html
   header('Access-Control-Allow-Origin:*');
   //specify data
   header('Content-Type: application/json');
   http_response_code(200);
   array('status'=> $status['ok']);
 // why not seen the json_responses
-  echo json_encode($response);
-  } 
+ 
+echo json_encode($responses);
+ } 
   else{
 
-   http_response_code($httpStatus);
-   echo json_encode(array('error'=>$status['server error'].' their was an internal server problem'));
+    echo json_encode(array('error'=>$status['server error'].' their was an internal server problem'));
+    http_response_code($status['server errror']);
  }
  exit();
 }

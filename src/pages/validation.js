@@ -1,7 +1,10 @@
-import { getElement } from './utils.js'
+// global imports
+import '../toggleSidebar.js'
+// named imports
+import { getElement, getElements } from '../utils.js'
 
-const input = document.querySelectorAll('input')
-const btn = document.querySelector('.btn')
+const input = getElements('input')
+const btn = getElement('.btn')
 
 input.forEach((input) => {
   if (input.value == '') {

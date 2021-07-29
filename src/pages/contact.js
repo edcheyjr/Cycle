@@ -5,13 +5,14 @@ import '../toggleSidebar.js'
 import '../cart/toggleCart.js'
 import '../cart/setCart.js'
 
+//
+import { getElement, getElements } from '../utils.js'
+
 //using selectors inside the element
-const questions = document.querySelectorAll('.question')
+const questions = getElements('.question')
 
 questions.forEach(function (question) {
-  const btn = question.querySelector('.question-btn')
-  console.log(btn)
-
+  const btn = getElement('.question-btn')
   btn.addEventListener('click', function () {
     console.log(question)
 

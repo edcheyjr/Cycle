@@ -1,6 +1,6 @@
 // get all products
 const allProductsUrl = 'https://course-api.com/javascript-store-products'
-
+// const allProductsUrl = 'http://localhost/ecycle/landing.php'
 // gets single product request
 const singleProductUrl =
   'https://course-api.com/javascript-store-single-product'
@@ -11,7 +11,12 @@ const getElement = (selection) => {
   if (element) return element
   throw new Error(`Please check "${selection}" selector, no such element exist`)
 }
-
+// get all the elements match the selector
+const getElements = (selection) => {
+  const element = document.querySelectorAll(selection)
+  if (element) return element
+  throw new Error(`Please check "${selection}" selector, no such element exist`)
+}
 // function for formatting the currency to 2 decimal points
 const formatPrice = (price) => {
   let formattedPrice = new Intl.NumberFormat('en-US', {
@@ -41,6 +46,7 @@ const setStorageItem = (name, item) => {
 export {
   allProductsUrl,
   singleProductUrl,
+  getElements,
   getElement,
   formatPrice,
   getStorageItem,
