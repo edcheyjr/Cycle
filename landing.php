@@ -45,15 +45,18 @@ function getImageFileInfo($target_file){
  * @param string $url
  * @return object $details 
  */
-function getThumbnails($thumbnail_width,$thumbnail_height,$url){
+function getThumbnails($url){
  // init variable
  $details = array();
  
  //input details to array 
  $details['url'] =$url;
+  list($width, $height, $type, $attr) =getimagesize($url);
+  $details['type'] = $type;
+  $details['attr'] = $attr;
+  $details['width'] = $width;
+ $details['height'] =$height; 
 
- $details['width'] = $thumbnail_width;
- $details['height'] = $thumbnail_height; 
 
  return $details;
 }
@@ -109,9 +112,9 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
   $image_info['type'] =$type;
  
   //extract thumbnails details
-  $thumbnails['full'] = getThumbnails($full_width, $full_height,$target_url_thumbnail_full.$full_thumbnail_name);
-  $thumbnails['large'] = getThumbnails($large_width, $large_height, $target_url_thumbnail_large.$large_thumbnail_name);
-  $thumbnails['small'] = getThumbnails($small_width, $small_height, $target_url_thumbnail_small.$large_thumbnail_name);
+  $thumbnails['full'] = getThumbnails($target_url_thumbnail_full.$full_thumbnail_name);
+  $thumbnails['large'] = getThumbnails($target_url_thumbnail_large.$large_thumbnail_name);
+  $thumbnails['small'] = getThumbnails($target_url_thumbnail_small.$small_thumbnail_name);
  
  
   // insert thumbnails details to thumbnails
@@ -126,15 +129,14 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
  // echo fields 
  }
  if($responses){
-
   //remove any header information
   header_remove(); 
   //limit which route can make this request
   //http://localost/ecycle/test/test.html
-  //http://localost/ecycle/index.html
-  header('Access-Control-Allow-Origin:*');
+  //
+  header('Access-Control-Allow-Origin: *');
   //specify data
-  header('Content-Type: application/json');
+  header('Content-Type: application/json; charset=UTF-8');
   http_response_code(200);
   array('status'=> $status['ok']);
 // why not seen the json_responses

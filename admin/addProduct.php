@@ -17,8 +17,26 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     // extract input from post array
     // print_r($_FILES['file']) && die;
     include 'utils/resize.php';
-    // original file dir
+    //thumbails width and heights
+    //recommended 1280 × 720 
+    //expirement with sizes recommended ratio 16:9 or 4:3
+    //$full_width= 3000; 
+    //$full_height =3000;
+    $full_width= 2560; 
+    $full_height =1440;
+    
 
+    // $large_width = 512;
+    // $large_height = 768;
+    $large_width = 1200;
+    $large_height = 720;
+    
+    // $small_width = 24;
+    // $small_height= 36;
+    $small_width = 379.33;
+    $small_height= 208;
+    
+    // original file dir
     $target_dir_original = '../public/store/original/';
     
 
@@ -75,22 +93,39 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
           input_data($company);
           // SANITIZE and move to the next item
           filter_var($company, FILTER_SANITIZE_STRING);
+
+          if(empty($desc)){
+
+            $validateErr = "description cannot be empty";
+          }else if(!preg_match("/^[a-zA-Z0-9#]*$/",$desc)){
+
+            $validateErr = "only alphabet,numbers and whitespaces allowed!";
+          }else{
+
+            input_data($desc);
+            $color1 = filter_var($desc,FILTER_SANITIZE_STRING);
+
           if(!preg_match("/^[a-zA-Z0-9#]*$/",$color1)){
 
             $validateErr = 'only alphabet number and # allowed!';
 
           }else{
-        // sanitize price and move to check the next input
+
+          // sanitize
+            
+            input_data($color1);
             $color1 = filter_var($color1,FILTER_SANITIZE_STRING);
             if(!preg_match("/^[a-zA-Z0-9#]*$/",$color2)){
 
               $validateErr = 'only alphabet number and # allowed!';
             }
+            input_data($color2);
            $color2 = filter_var($color2,FILTER_SANITIZE_STRING);
           }  
         }
       }
     }
+  }
     // filter the others
     
     if(!empty($file)){
@@ -116,9 +151,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 // resize the image for uniformity and also improve request handling interms of size of the image
                 
                 // rename
-                $new_full_thumbnail_name = uniqid('',true).'_FULL_RESIZED_IMG.'.$imageFileType;
-                $new_large_thumbnail_name = uniqid('',true).'_LARGE_RESIZED_IMG.'.$imageFileType;
-                $new_small_thumbnail_name = uniqid('',true).'_SMALL_RESIZED_IMG.'.$imageFileType;
+                $new_full_thumbnail_name = uniqid('').time().'_FULL_RESIZED_IMG.'.$imageFileType;
+                $new_large_thumbnail_name = uniqid('').time().'_LARGE_RESIZED_IMG.'.$imageFileType;
+                $new_small_thumbnail_name = uniqid('').time().'_SMALL_RESIZED_IMG.'.$imageFileType;
 
                 // target storage
                 $target_resized_full_thumbnail = $target_dir_thumbnail_full.basename($new_full_thumbnail_name);
@@ -130,16 +165,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 copy($tempFile, $target_resized_large_thumbnail);
                 copy($tempFile, $target_resized_small_thumbnail);
 
-                // resize that image
-                resize_image($target_resized_full_thumbnail,$full_width,$full_height,true);
-                resize_image($target_resized_large_thumbnail,$large_width,$large_height,true);
-                resize_image($target_resized_small_thumbnail,$small_width,$small_height,true);
+                // assigns variables as if they were an array
+                list($width, $height, $type, $attr) =getimagesize($tempFile);
 
+                // resize that image
+                resize_image($target_resized_full_thumbnail,$width,$height,$full_width,$full_height,true);
+                resize_image($target_resized_large_thumbnail,$width, $height,$large_width,$large_height,true);
+                resize_image($target_resized_small_thumbnail,$width, $height,$small_width,$small_height,true);
+
+                 $addProductQuery = "INSERT INTO products(id,bicycle_name,bicycle_desc, color_1, color_2, price, company,image_name,full_thumbnail_name,large_thumbnail_name,small_thumbnail_name,date_added) VALUES(null,'$name','$desc','$color1','$color2','$price','$company','$newFileName','$new_full_thumbnail_name','$new_large_thumbnail_name','$new_small_thumbnail_name',null)";
+                  mysqli_query($connect,$addProductQuery) or die(mysqli_error($connect));
                 if (move_uploaded_file($tempFile, $targetFile)){
 
                   $uploadMessage = "The file".  htmlspecialchars(basename($_FILES["file"]["name"])). " has succesfully been uploaded. new bike for sell!!!";
-                  $addProductQuery = "INSERT INTO products(bicycle_name, color_1, color_2, price ,company,desc,image_name,full_thumbnail_path,large_thumbnail_path,small_thumbnail_path) VALUES('$name','$color1','$color2','$price','$company','$desc','$newFileName','$new_full_thumbnail_name','$new_large_thumbnail_name','$new_small_thumbnail_name')";
-                    mysqli_query($connect,$addProductQuery) or die(mysqli_error($connect));
+                 
                   //  header('location:view.php');
                 }else{
                   $imageErrMessage = "Sorry, there was an error uploading your file.";
@@ -147,7 +186,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
               }
             }
             else{
-              $imageErrMessage = 'Sorry, there was an error uplading image, error number'.$file_Error;
+              $imageErrMessage = 'Sorry,their was an error with the file, error number'.$file_Error;
             }
           }
           else{
@@ -247,12 +286,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         <input type="number" aria-label="price" min='0' class="form-control" placeholder="price eg 2000" id = "price" name ="price" required>
        </div>
         <div class="form-group">
-         <label for="company" class="label">company</label>
+         <label for="company" class="label">brand</label>
         <input type="text" aria-label="company" min='0' class="form-control" placeholder="company" id = "company" name ="company" required>
         </div>
         <div class="form-group">
          <label for="desc" class="label">desciption</label>
-        <textarea type="text" aria-label="desc" min='0' class="form-control" rows="4" cols="form-control" placeholder="desc" id = "desc" name ="desc" required>
+        <textarea type="text" aria-label="desc" min='0' class="form-control" rows="4" cols="form-control" placeholder="description" id = "desc" name ="desc" required>
         </textarea>
        </div>
         <div class="form-group">
@@ -287,8 +326,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
           <option value="#000">black</option>
         </select>
        </div>
-       <button type="submit" class="btn form-control" name ="submit">Add</button>
+       <button type="submit" id='#button' class="btn form-control" name ="submit">Add</button>
      </form>
+     
      </div>
      </div>
     </div>

@@ -1,9 +1,7 @@
 // get all products
-const allProductsUrl = 'https://course-api.com/javascript-store-products'
-// const allProductsUrl = 'http://localhost/ecycle/landing.php'
+const allProductsUrl = 'http://localhost/ecycle/landing.php'
 // gets single product request
-const singleProductUrl =
-  'https://course-api.com/javascript-store-single-product'
+const singleProductUrl = 'http://localhost/ecycle/singleProduct.php'
 
 // util function for getting Dom elements
 const getElement = (selection) => {
@@ -22,7 +20,7 @@ const formatPrice = (price) => {
   let formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'KSH',
-  }).format((price / 100).toFixed(2))
+  }).format((price / 1).toFixed(2))
   return formattedPrice
 }
 // gets storageItem from localStorage if their is any item

@@ -15,7 +15,10 @@
           </ul>
         </div>
         <!-- logo -->
-        <p class="nav-logo2 black">eCycle</p>
+        <a href="/ecycle/index.html">
+          <p class="nav-logo2 black">eCycle</p>
+        </a>
+        
     </nav>
     <!-- sidebar -->
     <div class="sidebar-overlay">

@@ -11,7 +11,7 @@
  * returns
  * @return string $path image[jpg,png,gif,jpeg]($path)
  */
- function resize_image($path, $width, $height, $update = false) {
+ function resize_image($path,$old_x,$old_y, $new_width, $new_height, $update = false) {
    //  echo $path;
    $size  = getimagesize($path);// [width, height, type index]
    $types = array(1 => 'gif', 2 => 'jpeg', 3 => 'png', 4 => 'jpg');
@@ -20,11 +20,50 @@
       $save        = 'image'. $types[$size['2']];
       // $image = $load($path);
       $image       = loadImage($types,$size,$path);
-      $resized     = createTrueColors($width, $height);
+      // find the old width and old height one alternative
+         // $old_y = imagesy($path);
+         // $old_x = imagesy($path);
+         
+      // check the propotions of the image
+      //php recommended
+//       // Content type
+// header('Content-Type: image/jpeg');
+
+// // Get new dimensions
+// list($width_orig, $height_orig) = getimagesize($filename);
+
+// $ratio_orig = $width_orig/$height_orig;
+
+// if ($width/$height > $ratio_orig) {
+//    $width = $height*$ratio_orig;
+// // } else {
+// //    $height = $width/$ratio_orig;
+// // }
+
+
+            if($old_x > $old_y) 
+         {
+            $thumb_w    =   $new_width;
+            $thumb_h    =   $old_y*($new_height/$old_x);
+         }
+
+         if($old_x < $old_y) 
+         {
+            $thumb_w    =   $old_x*($new_width/$old_y);
+            $thumb_h    =   $new_height;
+         }
+
+         if($old_x == $old_y) 
+         {
+            $thumb_w    =   $new_width;
+            $thumb_h    =   $new_height;
+         } 
+
+      $resized     = createTrueColors($new_width, $new_height);
       $transparent = imagecolorallocatealpha($resized, 0, 0, 0, 127);
       imagesavealpha($resized, true);
       imagefill($resized, 0, 0, $transparent);
-      imagecopyresampled($resized,$image, 0, 0, 0, 0, $width, $height, $size['0'], $size['1']);
+      imagecopyresampled($resized,$image, 0, 0, 0, 0, $thumb_w, $thumb_h, $size['0'], $size['1']);
       imagedestroy($image);
       return $save($resized, $update ? $path : null);
    }

@@ -5,12 +5,17 @@ import { getElement, getElements } from '../utils.js'
 
 const input = getElements('input')
 const btn = getElement('.btn')
+btn.disabled = true
+btn.classList.add('disable')
 
 input.forEach((input) => {
-  if (input.value == '') {
-    btn.classList.add('disable')
-    btn.disabled = true
+  input.onchange = handleChange
+  function handleChange(e) {
+    if (e.target.value == '') {
+      btn.classList.add('disable')
+      btn.disabled = true
+    }
+    btn.classList.toggle('disable')
+    btn.disabled = false
   }
-  btn.classList.toggle('disable')
-  btn.toggleAttribute('disable')
 })

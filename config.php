@@ -43,10 +43,12 @@ else{
  color_2 VARCHAR(8) NOT NULL,
  price INT (10) NOT NULL,
  company VARCHAR(50) NOT NULL,
- desc TEXT NOT NULL,
+ bicycle_desc TEXT NOT NULL,
  image_name VARCHAR(100) NOT NULL,
  full_thumbnail_name VARCHAR(100) NOT NULL,
  large_thumbnail_name VARCHAR(100) NOT NULL,
  small_thumbnail_name VARCHAR(100) NOT NULL,
  date_added TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
  PRIMARY KEY(id));";
+
+//  UPDATE `products` SET `bicycle_desc` = '\r\nHere are some adjectives for bike: brand-new astral, old american-international, crummy, little, overly chromed, blaringly squeaky, good lousy, reliable electrical, american-international, nice all-terrain, tall, invincible, bloody quiet, worthless, heavy, damn broken-down, al tough, high-ticket, own clunky, dumb blue, ' WHERE `products`.`id` = 21;
