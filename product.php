@@ -27,13 +27,13 @@
               <a href="index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="shop.html" class="nav-link-items"> products </a>
+              <a href="shop.php" class="nav-link-items">shop </a>
             </li>
             <li>
-              <a href="about.html" class="nav-link-items"> about </a>
+              <a href="about.php" class="nav-link-items"> about </a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link-items"> contact </a>
+              <a href="contact.php" class="nav-link-items"> contact </a>
             </li>
           </ul>
         </div>
@@ -72,19 +72,19 @@
             </a>
           </li>
           <li>
-            <a href="shop.html" class="sidebar-link">
+            <a href="shop.php" class="sidebar-link">
               <i class="fas fa-couch fa-fw"></i>
-              products
+             shop
             </a>
           </li>
           <li>
-            <a href="about.html" class="sidebar-link">
+            <a href="about.php" class="sidebar-link">
               <i class="fas fa-book fa-fw"></i>
               about
             </a>
           </li>
           <li>
-            <a href="contact.html" class="sidebar-link">
+            <a href="contact.php" class="sidebar-link">
               <i class="fas fa-phone fa-fw"></i>
               contact
             </a>
@@ -93,22 +93,7 @@
       </aside>
     </div>
     <!-- cart -->
-    <div class="cart-overlay">
-      <aside class="cart">
-        <button class="cart-close">
-          <i class="fas fa-times"></i>
-        </button>
-        <header>
-          <h3 class="text-slanted">your bag</h3>
-        </header>
-        <!-- cart items -->
-        <div class="cart-items"></div>
-        <!-- footer -->
-        <footer>
-          <h3 class="cart-total text-slanted">total : $12.99</h3>
-          <button class="cart-checkout btn">checkout</button>
-        </footer>
-      </aside>
+    <?php require 'cart.php'?>
     </div>
     <!-- product info -->
     <section class="single-product">
@@ -138,5 +123,7 @@
       <h2>loading...</h2>
     </div>
     <script type="module" src="./src/pages/singleProduct.js"></script>
+    <script type="module" src="src/makeOrder.js"></script>
+
   </body>
 </html>

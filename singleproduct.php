@@ -70,12 +70,12 @@ list($width, $height, $type, $attr) =getimagesize($url);
  * @return boolean
  */
 
-// function featuredProducts($connect,$product_id){
+// function featuredshop($connect,$product_id){
 //  // init featured 
 // $featured = false;
 
-//  $queryTheLatestProducts = 'SELECT * FROM products ORDER BY date_added DESC LIMIT 3';
-//  $result = mysqli_query($connect, $queryTheLatestProducts);
+//  $queryTheLatestshop = 'SELECT * FROM shop ORDER BY date_added DESC LIMIT 3';
+//  $result = mysqli_query($connect, $queryTheLatestshop);
 //  while($row = mysqli_fetch_assoc($result)){
 //    extract($row);
 //    if($product_id === $id){
@@ -90,8 +90,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
   if(isset($_GET['id'])){
     $urlID = $_GET['id'];
-  $querySingleProducts = "SELECT * FROM products WHERE id = $urlID";
-  $result = mysqli_query($connect,$querySingleProducts) or die(mysqli_error($connect));
+  $querySingleproduct = "SELECT * FROM products WHERE id = $urlID";
+  $result = mysqli_query($connect,$querySingleproduct) or die(mysqli_error($connect));
   
   if(!$result){
     $error = 'their was error while getting the result';
@@ -106,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
     $fields['company'] = $company;
     $fields['desc'] = $bicycle_desc;
     $fields['price'] = $price;
-    // $fields['featured'] = featuredProducts($connect,$id);
+    // $fields['featured'] = featuredshop($connect,$id);
   
     // image info as an associative array; 
     $image_info['id']=$image_id; 

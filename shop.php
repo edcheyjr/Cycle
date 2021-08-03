@@ -1,9 +1,13 @@
+<?php
+session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products | eCycle</title>
+    <title>Shop | eCycle</title>
     <!-- font-awesome -->
     <link
       rel="stylesheet"
@@ -27,13 +31,13 @@
               <a href="index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="shop.html" class="nav-link-items"> products </a>
+              <a href="shop.php" class="nav-link-items"> shop </a>
             </li>
             <li>
-              <a href="about.html" class="nav-link-items"> about </a>
+              <a href="about.php" class="nav-link-items"> about </a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link-items"> contact </a>
+              <a href="contact.php" class="nav-link-items"> contact </a>
             </li>
           </ul>
         </div>
@@ -52,7 +56,7 @@
     <!-- hero -->
     <section class="page-hero">
       <div class="section-center">
-        <h3 class="page-hero-title">eCycle / Products</h3>
+        <h3 class="page-hero-title">eCycle / Shop</h3>
       </div>
     </section>
     <!-- sidebar -->
@@ -71,19 +75,19 @@
             </a>
           </li>
           <li>
-            <a href="products.html" class="sidebar-link">
+            <a href="shop.php" class="sidebar-link">
               <i class="fas fa-couch fa-fw"></i>
-              products
+              shop
             </a>
           </li>
           <li>
-            <a href="about.html" class="sidebar-link">
+            <a href="about.php" class="sidebar-link">
               <i class="fas fa-book fa-fw"></i>
               about
             </a>
           </li>
           <li>
-            <a href="contact.html" class="sidebar-link">
+            <a href="contact.php" class="sidebar-link">
               <i class="fas fa-phone fa-fw"></i>
               contact
             </a>
@@ -92,7 +96,8 @@
       </aside>
     </div>
     <!-- cart -->
-    <div class="cart-overlay">
+    <?php require "cart.php"?>
+    <!-- <div class="cart-overlay">
       <aside class="cart">
         <button class="cart-close">
           <i class="fas fa-times"></i>
@@ -100,15 +105,15 @@
         <header>
           <h3 class="text-slanted">your bag</h3>
         </header>
-        <!-- cart items -->
+         cart items 
         <div class="cart-items"></div>
-        <!-- footer -->
+        footer 
         <footer>
           <h3 class="cart-total text-slanted">total : $12.99</h3>
           <button class="cart-checkout btn">checkout</button>
         </footer>
       </aside>
-    </div>
+    </div> -->
     <!-- products -->
     <section class="products">
       <!-- filters -->
@@ -122,7 +127,7 @@
           <h4>Company</h4>
           <article class="companies">
             <button class="company-btn">all</button>
-            <button class="company-btn">ikea</button>
+            <button class="company-btn">company</button>
           </article>
           <!-- price -->
           <h4>Price</h4>
@@ -148,5 +153,7 @@
       <h2>loading...</h2>
     </div>
     <script type="module" src="src/pages/shop.js"></script>
+    <script type="module" src="src/makeOrder.js"></script>
+
   </body>
 </html>

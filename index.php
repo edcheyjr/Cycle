@@ -19,14 +19,7 @@ if (isset($_SESSION["username"])) {
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
-    <!-- bootstrap 5 -->
- <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    
+    <!-- bootstrap 5 -->    
 
     <!-- styles css -->
     <link rel="stylesheet" href="styles.css" />
@@ -46,13 +39,13 @@ if (isset($_SESSION["username"])) {
               <a href="index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="shop.html" class="nav-link-items"> product </a>
+              <a href="shop.php" class="nav-link-items"> shop </a>
             </li>
             <li>
-              <a href="about.html" class="nav-link-items"> about </a>
+              <a href="about.php" class="nav-link-items"> about </a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link-items"> contact </a>
+              <a href="contact.php" class="nav-link-items"> contact </a>
             </li>
             <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == true):?>
               <li>
@@ -65,7 +58,7 @@ if (isset($_SESSION["username"])) {
         <p class="nav-logo2">eCycles</p>
       </div>
       <!-- login button -->
-      <?php if(isset($_SESSION["username"])):?>
+      <?php if(isset($username)):?>
         <p class="login-btn" style="margin-top: 1.3rem;"><?= $username?>
         </p>
           <a href="logout.php" class="login-btn">logout</a>   
@@ -139,19 +132,19 @@ if (isset($_SESSION["username"])) {
             </a>
           </li>
           <li>
-            <a href="products.html" class="sidebar-link">
+            <a href="shop.php" class="sidebar-link">
               <i class="fas fa-couch fa-fw"></i>
-              products
+              shop
             </a>
           </li>
           <li>
-            <a href="about.html" class="sidebar-link">
+            <a href="about.php" class="sidebar-link">
               <i class="fas fa-book fa-fw"></i>
               about
             </a>
           </li>
           <li>
-            <a href="contact.html" class="sidebar-link">
+            <a href="contact.php" class="sidebar-link">
               <i class="fas fa-book fa-fw"></i>
               contact
             </a>
@@ -161,37 +154,7 @@ if (isset($_SESSION["username"])) {
     </div>
 
     <!-- cart -->
-    <div class="cart-overlay">
-      <aside class="cart">
-        <button class="cart-close">
-          <i class="fas fa-times"></i>
-        </button>
-        <header>
-          <h3 class="text-slanted">your bag</h3>
-        </header>
-        <!-- cart items -->
-        <div class="cart-items"></div>
-        <!-- footer -->
-        <footer>
-          <h3 class="cart-total text-slanted">total : KSH0.00</h3>
-          <!-- cart button to submit orders -->
-          <?php if(isset($_SESSION['username'])):?>
-            <form action="order.php" method="post" enctype="multipart/form-data" id ='order'>
-            <div class="success-msg">
-            <!-- success -->
-            </div>
-            <div class="error-msg">
-            <!-- error -->
-            </div>
-          <input type="hidden" id="user_id" value="<?=$user_id?>">
-          <button id='cart-submit' class="cart-checkout btn" type="submit">checkout</button>
-        </form>
-        <?php else:?>
-        <a class="cart-checkout btn"  href="login.php" type="button">checkout</a>
-        <?php endif?>
-        </footer>
-      </aside>
-    </div>
+    <?php require 'cart.php'?>
     <!-- featured products -->
     <section class="section featured">
       <div class="title">
@@ -260,6 +223,7 @@ if (isset($_SESSION["username"])) {
       <div class="modal fade offer" tabindex="-1" role="dialog" aria-labelledby="offer" aria-hidden="true" id='offer'>
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
+            get 15 % of for your first order
         </div>
       </div>        
     </section>

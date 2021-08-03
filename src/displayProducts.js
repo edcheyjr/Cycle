@@ -9,7 +9,7 @@ const display = (products, element, filters) => {
           <div class="product-container">
             <img src="${image}" class="product-img img" alt="${name}" />       
             <div class="product-icons">
-              <a href="singleProduct.html?id=${id}" class="product-icon">
+              <a href="product.php?id=${id}" class="product-icon">
                 <i class="fas fa-search"></i>
               </a>
               <button class="product-cart-btn product-icon" data-id="${id}">

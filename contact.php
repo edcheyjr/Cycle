@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
+    $user_id = $_SESSION['user_id'];
+    session_write_close();
+} else {
+    session_unset();
+    session_write_close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,19 +39,19 @@
               <a href="index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="shop.html" class="nav-link-items"> product</a>
+              <a href="shop.php" class="nav-link-items"> shop</a>
             </li>
             <li>
-              <a href="about.html" class="nav-link-items"> about </a>
+              <a href="about.php" class="nav-link-items"> about </a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link-items"> contact </a>
+              <a href="contact.php" class="nav-link-items"> contact </a>
             </li>
           </ul>
         </div>
         <!-- logo -->
         <p class="nav-logo2 black">eCycle</p>
-        <!-- <img src="./images/logo-black.svg" class="nav-logo2" alt="logo" /> -->
+          
         <!-- cart icon -->
         <div class="toggle-container">
           <button class="toggle-cart">
@@ -73,19 +84,19 @@
             </a>
           </li>
           <li>
-            <a href="shop.html" class="sidebar-link">
+            <a href="shop.php" class="sidebar-link">
               <i class="fas fa-couch fa-fw"></i>
-              shop.html
+              shop
             </a>
           </li>
           <li>
-            <a href="about.html" class="sidebar-link">
+            <a href="about.php" class="sidebar-link">
               <i class="fas fa-book fa-fw"></i>
               about
             </a>
           </li>
           <li>
-            <a href="contact.html" class="sidebar-link">
+            <a href="contact.php" class="sidebar-link">
               <i class="fas fa-phone fa-fw"></i>
               contact
             </a>
@@ -94,7 +105,8 @@
       </aside>
     </div>
      <!-- cart -->
-    <div class="cart-overlay">
+     <?php require 'cart.php'?>
+    <!-- <div class="cart-overlay">
       <aside class="cart">
         <button class="cart-close">
           <i class="fas fa-times"></i>
@@ -102,15 +114,13 @@
         <header>
           <h3 class="text-slanted">your bag</h3>
         </header>
-        <!-- cart items -->
         <div class="cart-items"></div>
-        <!-- footer -->
         <footer>
-          <h3 class="cart-total text-slanted">total : $12.99</h3>
+          <h3 class="cart-total text-slanted">total : KSH 1299</h3>
           <button class="cart-checkout btn">checkout</button>
         </footer>
       </aside>
-    </div>
+    </div> -->
     <main>
       <section class="questions">
         <!-- title -->
@@ -259,7 +269,7 @@
     </div>
     </main>
     <!-- javascript -->
-    <!-- <script type="module" src="src/pages/contactus.js"></script> -->
+    <script type="module" src="src/makeOrder.js"></script>
     <script type="module" src="src/pages/contact.js"></script>
   </body>
 </html>
