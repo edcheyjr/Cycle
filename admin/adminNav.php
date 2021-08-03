@@ -1,16 +1,19 @@
-<nav class="navbar page">
+<nav class="my-navbar page">
       <div class="nav-center">
         <!-- links -->
         <div>
           <button class="toggle-nav">
             <i class="fas fa-bars"></i>
           </button>
-          <ul class="nav-links">
-            <li>
-              <a href="view.php" class="nav-link"> admin panel </a>
+          <ul class="my-nav-links">
+             <li>
+              <a href="../index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="addProduct.php" class="nav-link"> add product </a>
+              <a href="index.php" class="nav-link-items"> admin panel </a>
+            </li>
+            <li>
+              <a href="addProduct.php" class="nav-link-items"> add product </a>
             </li>
           </ul>
         </div>

@@ -21,7 +21,7 @@ const setupPrice = (store) => {
     priceValue.textContent = `Value : KSH${value}`
 
     // then when input get from the toggle filter to show only those less or equal to that price
-    let newStore = store.filter((product) => product.price / 100 <= value)
+    let newStore = store.filter((product) => product.price / 1 <= value)
 
     // the only display those bycycles or products
     display(newStore, getElement('.products-container'), true)

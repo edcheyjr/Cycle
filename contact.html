@@ -16,25 +16,25 @@
   </head>
   <body>
     <!-- navbar -->
-    <nav class="navbar page">
+    <nav class="my-navbar page">
       <div class="nav-center">
         <!-- links -->
         <div>
           <button class="toggle-nav">
             <i class="fas fa-bars"></i>
           </button>
-          <ul class="nav-links">
+          <ul class="my-nav-links">
             <li>
-              <a href="index.html" class="nav-link"> home </a>
+              <a href="index.php" class="nav-link-items"> home </a>
             </li>
             <li>
-              <a href="shop.html" class="nav-link"> product</a>
+              <a href="shop.html" class="nav-link-items"> product</a>
             </li>
             <li>
-              <a href="about.html" class="nav-link"> about </a>
+              <a href="about.html" class="nav-link-items"> about </a>
             </li>
             <li>
-              <a href="contact.html" class="nav-link"> contact </a>
+              <a href="contact.html" class="nav-link-items"> contact </a>
             </li>
           </ul>
         </div>
@@ -67,7 +67,7 @@
         <!-- links -->
         <ul class="sidebar-links">
           <li>
-            <a href="index.html" class="sidebar-link">
+            <a href="index.php" class="sidebar-link">
               <i class="fas fa-home fa-fw"></i>
               home
             </a>
@@ -218,8 +218,48 @@
           </article>
           <!-- end of single question -->
       </section>
+      <section class='section-center'>
+        <div class="title" >
+        <h2  style="text-transform:none;"><span>/</span>Questions to us,if not answered in FAQs</h2>
+        </div>
+        <div class="card">
+          <form class="form" action="contact.php" id="contact-us" enctype="multipart/form-data" >
+        <div>
+         <!-- error -->
+         <p class="error-msg">
+           <!-- error msg -->
+         </p>
+         <p class="success-msg">
+           <!-- success msg -->
+         </p>
+       </div>
+       <div class="form-group">
+         <label for="name" class="label">name</label>
+        <input type="text" aria-label="name" id = "name" class="form-control name" placeholder="name" name ="name" required>
+       </div>
+       <div class="form-group">
+         <label for="email" class="label">email</label>
+         <input type="email" aria-label="email"  class="form-control" placeholder="email" id = "email" name ="email" required >
+        </div>
+         <div class="form-group">
+         <label for="subject" class="label">subject</label>
+         <input type="text" aria-label="subject"  class="form-control" placeholder="subject" id = "subject" name ="subject" required>
+        </div>
+        <div class="form-group">
+         <label for="message" class="label">message</label>
+        <textarea type="text" aria-label="message"class="form-control" rows="4" cols="form-control" placeholder="message" id = "message" name ="message" required>
+        </textarea>
+       </div>
+       <button type="submit" id='button' class="btn form-control" name ="button">Submit</button>
+     </form>
+     
+     </div>
+     </section>
+     </div>
+    </div>
     </main>
     <!-- javascript -->
+    <!-- <script type="module" src="src/pages/contactus.js"></script> -->
     <script type="module" src="src/pages/contact.js"></script>
   </body>
 </html>

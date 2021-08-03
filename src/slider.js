@@ -31,7 +31,7 @@ container.innerHTML = people
       position = 'active'
     }
     return `<article class="slide ${position}">
-  <img src=${img} class="img" alt="${name}"/>
+  <img src=${img} class="img " alt="${name}"/>
   <h4>${name}</h4>
   <p class="text">
    ${review}

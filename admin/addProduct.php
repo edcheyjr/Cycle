@@ -287,11 +287,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        </div>
         <div class="form-group">
          <label for="company" class="label">brand</label>
-        <input type="text" aria-label="company" min='0' class="form-control" placeholder="company" id = "company" name ="company" required>
+        <input type="text" aria-label="company"  class="form-control" placeholder="company" id = "company" name ="company" required>
         </div>
         <div class="form-group">
          <label for="desc" class="label">desciption</label>
-        <textarea type="text" aria-label="desc" min='0' class="form-control" rows="4" cols="form-control" placeholder="description" id = "desc" name ="desc" required>
+        <textarea type="text" aria-label="desc"class="form-control" rows="4" cols="form-control" placeholder="description" id = "desc" name ="desc" required>
         </textarea>
        </div>
         <div class="form-group">

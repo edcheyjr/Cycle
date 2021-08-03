@@ -1,7 +1,7 @@
 import { formatPrice } from './utils.js'
 import { addToCart } from './cart/setCart.js'
 const display = (products, element, filters) => {
-  // display products which in this case bycycles
+  // display products which in this case bicycles
   element.innerHTML = products
     .map((product) => {
       const { id, name, image, price } = product
