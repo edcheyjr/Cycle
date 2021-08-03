@@ -33,7 +33,13 @@
         <!-- links -->
         <ul class="sidebar-links">
           <li>
-            <a href="view.php" class="sidebar-link">
+            <a href="../index.php" class="sidebar-link">
+              <i class="fas fa-home fa-fw"></i>
+              admin panel
+            </a>
+          </li>
+          <li>
+            <a href="index.php" class="sidebar-link">
               <i class="fas fa-home fa-fw"></i>
               admin panel
             </a>

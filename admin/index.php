@@ -8,7 +8,7 @@ $target_url_original = 'http://localhost/ecycle/public/store/original/';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tabs</title>
+    <title>Admin panel | eCycle</title>
 
     <!-- styles -->
     <link rel="stylesheet" href="../styles.css" />
@@ -35,10 +35,10 @@ $target_url_original = 'http://localhost/ecycle/public/store/original/';
         <article class="about">
           <!-- btn container -->
           <div class="btn-container">
-            <button class="tab-btn " data-id="users">users</button>
+            <button class="tab-btn active" data-id="users">users</button>
             <button class="tab-btn " data-id="orders">orders</button>
             <button class="tab-btn " data-id="contacts">Contact us</button>
-            <button class="tab-btn active" data-id="products">products</button>
+            <button class="tab-btn " data-id="products">products</button>
             <button class="tab-btn" data-id="archives">archive</button>
           </div>
           <div class="about-content">
@@ -197,7 +197,6 @@ $target_url_original = 'http://localhost/ecycle/public/store/original/';
             <th>Price</th>
             <th>Date Added</th>
             <th>Delete</th>
-            <th>Update</th>
         </tr>
         </thead>
         <tbody>

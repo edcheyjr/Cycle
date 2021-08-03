@@ -2,6 +2,18 @@
 require '../connect.php';
 
 $imageErrMessage = $uploadMessage = $validateErr = null;
+     
+
+$colors_array = [
+          "#fff",
+          "#e75757",
+          "#fffb0a",
+          "#fda400",
+          "#008000",
+          "#0077ff",
+          "#800080",
+          "#ffc0cb",
+          "#000"];
 
 // remove special characters
 function input_data($data) {  
@@ -84,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         if(empty($company)){
           $validateErr = "company name required!";
         }
-        elseif(!preg_match("/^[a-zA-Z0-9_\s]*$/",$company)){
+        elseif(!preg_match("/^[a-zA-Z0-9_\s-]*$/",$company)){
 
           $validateErr = 'only alphabet, numbers and whitespaces allowed!';
         }
@@ -97,17 +109,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
           if(empty($desc)){
 
             $validateErr = "description cannot be empty";
-          }else if(!preg_match("/^[a-zA-Z0-9#]*$/",$desc)){
+          }else if(!preg_match("/^[a-zA-Z0-9_\s]*$/",$desc)){
 
             $validateErr = "only alphabet,numbers and whitespaces allowed!";
           }else{
 
             input_data($desc);
-            $color1 = filter_var($desc,FILTER_SANITIZE_STRING);
+            $desc = filter_var($desc,FILTER_SANITIZE_STRING);
 
-          if(!preg_match("/^[a-zA-Z0-9#]*$/",$color1)){
-
-            $validateErr = 'only alphabet number and # allowed!';
+          if(!in_array($color1,$colors_array)){
+            return;
+            $validateErr = 'not the selected items!';
 
           }else{
 
@@ -115,9 +127,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             
             input_data($color1);
             $color1 = filter_var($color1,FILTER_SANITIZE_STRING);
-            if(!preg_match("/^[a-zA-Z0-9#]*$/",$color2)){
+            if(!in_array($color2,$colors_array)){
 
-              $validateErr = 'only alphabet number and # allowed!';
+              $validateErr = 'not the selected items';
             }
             input_data($color2);
            $color2 = filter_var($color2,FILTER_SANITIZE_STRING);
@@ -296,7 +308,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        </div>
         <div class="form-group">
          <label for="name" class="label">select image</label>
-        <input type="file" aria-label="image" class="form-control" id ="name"  name ="file" required>
+          <input type="file" aria-label="image" class="form-control" id ="name"  name ="file" required>
        </div>
         <div class="form-group">
          <label for="color1" class="label">select the dominant colors of the product</label>
@@ -332,6 +344,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
      </div>
      </div>
     </div>
-    <script type='module' src="../src/pages/validation.js"></script>
+    <script type='module' src="../src/validation.js"></script>
   </body>
 </html>

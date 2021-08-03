@@ -58,7 +58,7 @@ form.addEventListener('submit', (event) => {
   if (name != '' && email != '' && subject != '' && message != '') {
     handleContactUs(data)
   } else {
-    error.innerHtml = `please fill all the fields`
+    error.innerHTML = `<p>please fill all the fields</p>`
   }
 })
 
@@ -73,10 +73,12 @@ const handleContactUs = (data) => {
     .then((response) => response.json())
     .then((json) => {
       console.log(json)
+      console.log(success)
 
       if (json.success == 'submitted') {
-        success.innerHtml = `${json.success}, thank you for you question, we will get back to you soon`
-      } else error.innerHtml = 'Oops! the was a problem submitting'
+        success.innerHTML = `<p class= 'success-msg'>${json.success}, thank you for you question, we will get back to you soon</p>`
+      } else
+        error.innerHTML = `<p  class='error-msg'>Oops! the was a problem submitting</p>`
     })
     .catch((err) => console.log(err))
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'connect.php';
 // define variables
 $error = null;

@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
    $mysql_query = "INSERT INTO orders(order_number,quantity,price, total_price, user_id, product_id) VALUES ('$order_number','$quantity','$price','$total_amount', $user_id, $product_id);";
    mysqli_query($connect,$mysql_query);
    $success['order'] = 'order was delivered successfully';
-   $success['success'] = true;
+   $success['success'] = 'success';
    echo json_encode($success);
   }else{
    echo json_encode($err);

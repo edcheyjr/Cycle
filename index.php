@@ -20,12 +20,13 @@ if (isset($_SESSION["username"])) {
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
     <!-- bootstrap 5 -->
-    <link
+ <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    
 
     <!-- styles css -->
     <link rel="stylesheet" href="styles.css" />
@@ -69,9 +70,7 @@ if (isset($_SESSION["username"])) {
         </p>
           <a href="logout.php" class="login-btn">logout</a>   
         <?php else:?>
-          '<a href="#" class="login-btn"
-        data-bs-toggle="modal"
-          data-bs-target="#loginModal"
+          '<a href="login.php" class="login-btn"
         >login   </a>'      
         <?php
           endif        
@@ -110,15 +109,18 @@ if (isset($_SESSION["username"])) {
         <h1 class="text-slanted">rest, relax, unwind</h1>
         <h3>Get the bike of your choices - we provide</h3>
         <a href="shop.html" class="hero-btn"> shop now </a>
+       
+       <?php if(isset($_SESSION['username'])):?>
+        <div></div>
+        <?php else:?>
         <a
-          href="#"
+          href="signup.php"
           class="hero-primary-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#signupModal"
         >
           sign up
           <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
+        <?php endif?>
       </div>
     </section>
     <!-- sidebar -->
@@ -171,19 +173,21 @@ if (isset($_SESSION["username"])) {
         <div class="cart-items"></div>
         <!-- footer -->
         <footer>
-          
-          <h3 class="cart-total text-slanted">total : $12.99</h3>
+          <h3 class="cart-total text-slanted">total : KSH0.00</h3>
           <!-- cart button to submit orders -->
           <?php if(isset($_SESSION['username'])):?>
-          <form action="order.php" method="post" enctype="multipart/form-data" id ='order'>
-          <p class="error-msg"></p>
-          <p class="success-msg"></p>
+            <form action="order.php" method="post" enctype="multipart/form-data" id ='order'>
+            <div class="success-msg">
+            <!-- success -->
+            </div>
+            <div class="error-msg">
+            <!-- error -->
+            </div>
           <input type="hidden" id="user_id" value="<?=$user_id?>">
-          <button class="cart-checkout btn" type="submit">checkout</button>
+          <button id='cart-submit' class="cart-checkout btn" type="submit">checkout</button>
         </form>
         <?php else:?>
-        <button class="cart-checkout btn" data-bs-toggle="modal"
-        data-bs-target="#loginModal" type="button">checkout</button>
+        <a class="cart-checkout btn"  href="login.php" type="button">checkout</a>
         <?php endif?>
         </footer>
       </aside>
@@ -252,247 +256,24 @@ if (isset($_SESSION["username"])) {
     </section>
     <section>
       <!-- modal -->
-      <!-- 15% off modal -->
-
-      <!-- login modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="login"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered ">
+          <!-- 15% off modal -->
+      <div class="modal fade offer" tabindex="-1" role="dialog" aria-labelledby="offer" aria-hidden="true" id='offer'>
+        <div class="modal-dialog modal-sm">
           <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="modal-label" style="text-transform: none;">Welcome to eCycle, Login</h3>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body ">    
-              <form
-                  class="form"
-                  action="login.php"
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-              <?php if(isset($_SESSION['loginErr'])):?>
-                  <p class="error-msg"><?= $_SESSION['loginErr']?></p>
-                  <?php unset($_SESSION['loginErr'])?>
-                  <?php endif?>
-                    <?php if(isset($_SESSION['wrongCredentials'])):?>
-                  <p class="error-msg"><?= $_SESSION['wrongCredentials']?></p>
-                  <?php unset($_SESSION['wrongCredentials'])?>
-                  <?php endif?>
-
-                  <div class="form-group">
-                    <label for="email" class="label">email</label>
-                    <input
-                      type="email"
-                      aria-label="email"
-                      class="form-control"
-                      placeholder="example@gmail.com"
-                      id="login_email"
-                      name="login_email"
-                      required
-                    />
-                  </div>
-                    <div class="form-group">
-                    <label for="password" class="label">password</label>
-                    <input
-                      type="password"
-                      aria-label="password"
-                      class="form-control"
-                      id="login_password"
-                      name="login_password"
-                      required
-                    />
-                  </div>                
-                  <button
-                    type="submit"
-                    id="#button"
-                    class="btn form-control"
-                    name="submit"
-                  >
-                    Login
-                  </button>
-
-                  
-                </form>  
-            </div>
-          <div class="modal-footer">
-            <p>Don't have an account ?<a href="#" class="secondary-btn" data-bs-target="#signupModal" data-bs-toggle="modal" data-bs-dismiss="modal">signup</a></p>
-          </div>
-            </div>
-          </div>
         </div>
-      <!-- sign up modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="sign up"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="modal-label" style="text-transform: none;">Welcome to eCycle, Sign Up</h3>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body ">
-              <form
-              class="form"
-              id="signup"
-              action="signup.php"
-              method="post"
-              >
-                 <?php if(isset($_SESSION['signupErr'])):?>
-                  <p class="error-msg"><?=$_SESSION['signupErr']?></p>
-                 <?php unset($_SESSION['signupErr'])?>
-                  <?php elseif(isset($_SESSION['sucesss'])):?>
-                  <p class="success-msg"></p>
-                  <p class="error-msg"><?=$_SESSION['success']?></p>
-                 <?php unset($_SESSION['success'])?>
-                 <?php endif?>
-                  <div class="form-group">
-                    <label for="name" class="label">full name</label>
-                    <input
-                      type="text"
-                      aria-label="name"
-                      id="name"
-                      class="form-control"
-                      placeholder="name"
-                      name="name"
-                      required
-                    />
-                  </div>
-                     <div class="form-group">
-                    <label for="username" class="label">username</label>
-                    <input
-                      type="text"
-                      aria-label="username"
-                      id="username"
-                      class="form-control"
-                      placeholder="username"
-                      name="username"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="email" class="label">email</label>
-                    <input
-                      type="email"
-                      aria-label="email"
-                      class="form-control"
-                      placeholder="example@gmail.com"
-                      id="email"
-                      name="email"
-                      required
-                    />
-                  </div>
-                    <div class="form-group">
-                    <label for="phone" class="label">Telephone number</label>
-                    <input
-                      type="tel"
-                      aria-label="telephone"
-                      class="form-control"
-                      placeholder="070200000"
-                      id="phone"
-                      name="phone"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="dob" class="label">date of birth</label>
-                    <input
-                      type="date"
-                      aria-label="dob"
-                      class="form-control"
-                      id="dob"
-                      name="dob"
-                      required
-                    />
-                  </div>
-                    <div class="form-group">
-                    <label for="postalAddress" class="label">postal address</label>
-                    <input
-                      type="text"
-                      aria-label="postal "
-                      class="form-control"
-                      id="postalAddress"
-                      name="postalAddress"
-                      required
-                    />
-                  </div>  
-                    <div class="form-group">
-                    <label for="postalCode" class="label">postal code</label>
-                    <input
-                      type="text"
-                      aria-label="postal code"
-                      class="form-control"
-                      id="postalCode"
-                      name="postalCode"
-                      required
-                    />
-                  </div> 
-                    <div class="form-group">
-                    <label for="password" class="label">password</label>
-                    <input
-                      type="password"
-                      aria-label="password"
-                      class="form-control"
-                      id="password"
-                      name="password"
-                      required
-                    />
-                  </div> 
-                  <div class="form-group">
-                    <label for="password" class="label">confirm password</label>
-                    <input
-                      type="password"
-                      aria-label="confirm password"
-                      class="form-control"
-                      id="corfirmPassword"
-                      name="confirmPassword"
-                      required
-                    />
-                  </div> 
-
-                  <button
-                    type="submit"
-                    id="button"
-                    class="btn form-control"
-                    name="submit"
-                  > Sign up
-                  </button>
-                </form>
-                <div class="modal-footer">
-                  <p>Have an account ?<a href="#" class="secondary-btn" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">login</a></p>
-                </div>
-          </div>
-        </div>
-      </div>
+      </div>        
     </section>
     <!-- bootstrapped js -->
-    <script
+    <!-- <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
     <!-- in project js -->
 
     <script type="module" src="index.js"></script>
     <script type="module" src="./src/makeOrder.js"></script>
+    <script type="module" src="./src/offermodal.js"></script>
     <script type="module" src="./src/slider.js"></script>
   </body>
 </html>

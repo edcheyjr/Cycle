@@ -1244,11 +1244,11 @@ Admin panel
 
 @media screen and (min-width: 992px) {
   .btn-container {
-  border-top-left-radius: var(--radius);
-  border-top-right-radius: var(--radius);
-  display: grid;
-  grid-template-columns: 1fr 1fr ;
-}
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .about {
   background: var(--clr-white);

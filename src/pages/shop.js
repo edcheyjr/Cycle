@@ -16,10 +16,6 @@ import { getElement } from '../utils.js'
 
 const loading = getElement('.page-loading')
 
-// const bicycles = await fetchProducts()
-// if(bicycles){
-//  setupStore(bicycles)}
-
 display(store, getElement('.products-container'))
 setupSearch(store)
 setupCompanies(store)
