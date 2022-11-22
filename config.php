@@ -17,7 +17,7 @@ if($db !== null){
       $createDB = "CREATE DATABASE IF NOT EXISTS".$db;
 }
 else{
-    $createDB =  "CREATE DATABASE IF NOT EXISTS ecycle"
+    $createDB =  "CREATE DATABASE IF NOT EXISTS ecycle";
 }
 
 // create database
