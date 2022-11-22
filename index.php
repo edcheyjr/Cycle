@@ -1,11 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION["CONFIG_SETUP"])){
- include_once("./config.php");
- // then set the config_setup as true
- $_SESSION["CONFIG_SETUP"] = 1;
-}
-
 if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $user_id = $_SESSION['user_id'];
