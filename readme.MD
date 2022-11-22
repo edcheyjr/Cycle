@@ -2,7 +2,7 @@
 
 It is a bicycle e-commerce site written with vanilla javascript and php
 
-* Remember to configure your server xampp or any other cross platform server to allow **file upload** and **GDimage** extension to be active
+## Remember to configure your server xampp or any other cross platform server to allow **file upload** and **GDimage** extension to be active
 
 - At xampp it is at **php.ini** look for this `file_uploads=On` of file upload turn it on
 - At **Dynamic Extensions** add `extension=gd`
@@ -15,7 +15,7 @@ $password =;
 $db =;
 ```
 
-* To run locally the file ensure you have run config.php file once to create the db and the relevant tables the start the project with your prefered php server and sql server
+## To run locally the file ensure you have run config.php file once to create the db and the relevant tables the start the project with your prefered php server and sql server
 
 this are some of the servers
 
@@ -23,7 +23,7 @@ this are some of the servers
 - [mysql community server](https://dev.mysql.com)
   This can also be found in user friendly software such as [Xampp](https://www.apachefriends.org) by pacha friends and this contain all of the servers you might need. They are many other
 
-* **expected out if the configuration was successful is as follows**
+## **expected out if the configuration was successful is as follows**
 
 - on first run of config file creating the database
   <img src="./readme-images/first.png"/>
