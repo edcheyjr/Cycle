@@ -8,6 +8,6 @@ It is a bicycle e-commerce site writtern with vanilla javascript and php
   this are some of the servers 
 -  [apache](https://apache.org)
 - [mysql community server](https://dev.mysql.com)
-This can also be found in user friendly software such as [Xammp](https://www.apachefriends.org) by pacha friends and this contain all of the servers you might need. They are many other
+This can also be found in user friendly software such as [Xampp](https://www.apachefriends.org) by pacha friends and this contain all of the servers you might need. They are many other
 # Have Fun!!!
  
