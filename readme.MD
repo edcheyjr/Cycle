@@ -16,5 +16,14 @@ $db =;
 -  [apache](https://apache.org)
 - [mysql community server](https://dev.mysql.com)
 This can also be found in user friendly software such as [Xampp](https://www.apachefriends.org) by pacha friends and this contain all of the servers you might need. They are many other
-### Have Fun😁!!!
+#### ~expected out if the configuration was successful is as follows
+- on first run of config file creating the database
+<img src="./readme-images/first.png"/>
+- on second run creates all the table
+<img src="./readme-images/second.png"/>
+- on third run status changes to OK connected
+<img src="./readme-images/third.png"/>
+-if any of this does not go through you will get an error message on the screen looks something like the image below
+<img src="./readme-images/error.png"/>
+## Have Fun😁!!!
  
