@@ -27,6 +27,6 @@ This can also be found in user friendly software such as [Xampp](https://www.apa
 <img src="./readme-images/third.png"/>
 
 - if any of this does not go through you will get an error message on the screen looks something like the image below
-<img src="./readme-images/error.png"/>>
+<img src="./readme-images/error.png"/>
 ## Have Fun😁!!!
  
