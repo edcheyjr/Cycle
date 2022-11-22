@@ -10,10 +10,18 @@ else{
     echo "Connected";
 }
 
-// create database
-$cat1 = "CREATE DATABASE IF NOT EXISTS ecycle";
 
-if (mysqli_query($connect , $cat1)){
+
+// check if the $db variable as specified name the use it to create database otherwise use the default ecycle
+if($db !== null){
+      $createDB = "CREATE DATABASE IF NOT EXISTS".$db;
+}
+else{
+    $createDB =  "CREATE DATABASE IF NOT EXISTS ecycle"
+}
+
+// create database
+if (mysqli_query($connect , $createDB)){
     if($db == null){
         echo "db was created <br>";
     }
