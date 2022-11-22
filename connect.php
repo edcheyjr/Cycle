@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $user = "root";
-$password = "123hadi9alafu0";
-$db ="ecycle";
+$password =null;
+$db =null;
 
 
  
