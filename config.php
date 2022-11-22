@@ -186,7 +186,7 @@ if($connect){
     connection</p>";
 }
 else{
-    echo "<p style='color:blue; font-weight:bold; font-size:large; text-transform:uppercase;; padding-bottom:4px;'>
+    echo "<p style='color:blue; font-weight:bold; font-size:large; text-transform:uppercase; padding-bottom:4px;'>
     RUN The file again to create tables</p>";
 }
 }  
