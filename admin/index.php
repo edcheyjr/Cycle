@@ -1,4 +1,5 @@
 <?php
+require_once("../config.php");
 require '../connect.php';
 $target_url_original = 'http://localhost/ecycle/public/store/original/';
 
