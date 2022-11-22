@@ -36,7 +36,7 @@ if($connect){
             exit("<p style='color:green; font-weight:bold; font-size:large'>Connected, status OK ✅</p>");
         }
     }else echo  "<h2 style='color:orange; font-weight:bold'>There is no table in $db ❌ </h2>";
-    }else echo "<h2 style='color:red; font-weight:bold'>Unable to check the $db ❌, error - ". $connect->error."</h2>";
+    }else echo "<h2 style='color:orange; font-weight:bold'>Unable to check the $db ❌, error - ". $connect->error."</h2>";
 }
 // else
 echo("<p style='color:green; font-weight:bold; font-size:medium; text-transform:uppercase'>Let's continue with setup</p>");
@@ -142,49 +142,54 @@ PRIMARY KEY (id)
 )";
 
 
-
-if(mysqli_query($connect,$contact_us) ){
-    echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>contacts table created succesfully ✅</p>";
+if($connect){
+    
+    if(mysqli_query($connect,$contact_us) ){
+        echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>contacts table created successfully ✅</p>";
+    }
+    else{
+        exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create contact us table ❌".mysqli_error($connect)."</h2>");
+    }
+    if(mysqli_query($connect,$user_table) ){
+        echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>users table created successfully ✅</p>";
+    }else{
+        exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create user table ❌".mysqli_error($connect)."</h2>");
+    }
+    
+    if(mysqli_query($connect,$products_table) ){
+        echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>products table created successfully ✅</p>";
+    }else{
+        exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create product table ❌".mysqli_error($connect)."</h2>");
+    }
+    
+    if(mysqli_query($connect,$products_archive) ){
+        "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>archives table created successfully ✅</p>";
+    }
+    else{
+        exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create product achives table ❌".mysqli_error($connect)."</h2>");
+    
+    }
+    
+    
+    // ALL TABLES with FOREIGN KEY CONSTRAINTS should be created LAST
+    if(mysqli_query($connect,$order_table) ){
+        echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>orders table created successfully ✅</p>";
+    }
+    else{
+        exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create orders table ❌".mysqli_error($connect)."</h2> 
+        <p style='color:orange; font-weight:medium; font-style:italic; font-size:normal;text-decoration:underline; text-transform:capitalize;;padding-bottom:4px;'> if error is &#8212; (Errno: 150 `Foreign Key Constraint Is Incorrectly Formed`) check if the order of table create operation is correct as all with foreign key constraint should be created last</p>");
+    }
+        // close the connect
+    mysqli_close($connect);
+    echo "<p style='color:green; font-weight:bold; font-size:large; text-transform:capitalize;; padding-bottom:4px;'>
+    All configuration are set closing
+    connection</p>";
 }
 else{
-    exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create contact us table ❌".mysqli_error($connect)."</h2>");
+    echo "<p style='color:blue; font-weight:bold; font-size:large; text-transform:capitalize;; padding-bottom:4px;'>
+    RUN The file again to create tables
+    connection</p>";
 }
-if(mysqli_query($connect,$user_table) ){
-    echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>users table created succesfully ✅</p>";
-}else{
-    exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create user table ❌".mysqli_error($connect)."</h2>");
-}
-
-if(mysqli_query($connect,$products_table) ){
-    echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>products table created successfully ✅</p>";
-}else{
-    exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create product table ❌".mysqli_error($connect)."</h2>");
-}
-
-if(mysqli_query($connect,$products_archive) ){
-    "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>archives table created successfully ✅</p>";
-}
-else{
-    exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create product achives table ❌".mysqli_error($connect)."</h2>");
-
-}
-
-
-// ALL TABLES with FOREIGN KEY CONSTRAINTS should be created LAST
-if(mysqli_query($connect,$order_table) ){
-    echo "<p style='color:blue; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>orders table created successfully ✅</p>";
-}
-else{
-    exit("<h2 style='color:red; font-weight:medium; font-style:italic; font-size:large; text-transform:capitalize;;padding-bottom:4px;'>failed to create orders table ❌".mysqli_error($connect)."</h2> 
-    <p style='color:orange; font-weight:medium; font-style:italic; font-size:normal;text-decoration:underline; text-transform:capitalize;;padding-bottom:4px;'> if error is &#8212; (Errno: 150 `Foreign Key Constraint Is Incorrectly Formed`) check if the order of table create operation is correct as all with foreign key constraint should be created last</p>");
-}
-
-
-// close the connect
-mysqli_close($connect);
-echo "<p style='color:green; font-weight:bold; font-size:large; text-transform:capitalize;; padding-bottom:4px;'>
-All configuration are set closing
-connection</p>";
 }  
 
 // closing div tag
