@@ -1,6 +1,6 @@
 # Cycle
 It is a bicycle e-commerce site writtern with vanilla javascript and php
-#### Remember to configure your server xampp or any other cross platform server to allow **file upload** and **GDimage** extension to be active
+## Remember to configure your server xampp or any other cross platform server to allow **file upload** and **GDimage** extension to be active
  - At xampp it is at  **php.ini** look for this ``file_uploads=On`` of file upload turn it on
  - At **Dynamic Extensions** add ``extension=gd``
  - Change the connect default configuration for connecting to db here is an example of [connect.php](./connect.php)
