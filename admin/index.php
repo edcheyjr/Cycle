@@ -1,5 +1,10 @@
 <?php
-require_once("../config.php");
+session_start();
+if(!isset($_SESSION["CONFIG_SETUP"])){
+ include_once("./config.php");
+ // then set the config_setup as true
+ $_SESSION["CONFIG_SETUP"] = 1;
+}
 require '../connect.php';
 $target_url_original = 'http://localhost/ecycle/public/store/original/';
 
